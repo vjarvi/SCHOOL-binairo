@@ -1,5 +1,5 @@
 Game rules
-Objective of the game is to fill the board (6X6 if not changed) with 0s and 1s with the following rules:
+Objective of the game is to fill the board (8X8 if not changed) with 0s and 1s with the following rules:
 - each row and column must have same number of 0s and 1s.
 - Three or more of the same number in a row is prohibited in every row and column.
 At first user chooses between filling the board randomly or himself. If user chooses to fill the board himself,
@@ -7,9 +7,10 @@ he/she cannot break previously said rules. When starting method is selected and 
 the game user can start completely new game by clicking 'reset'.
 
 User can fill squares by clicking on them multiple times:
-1 click = 0, 2 clicks = 1, and 3 clicks = empty square. Right and wrong fills are allowed until 'Place'
+1 click = 0, 2 clicks = 1, and 3 clicks = empty square again. Right and wrong fills are allowed until 'Place'
 button is clicked. If there is incorrectly filled squares, program will tell and they will turn red.
 Once the button is pressed, you cannot change correctly put squares. Be careful before pressing 'Place'!
+It is possible to legally fill squares so that game cannot by completed anymore.
 Game is over when board is full and the time used is shown. There is option to pause the game and see 
 rules.
 
