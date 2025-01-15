@@ -1,11 +1,7 @@
 /*
- * program writer
- * Name: Valtti Järvi
- * Student number: 151326251
- * username: tfvaja
- * E-Mail: valtti.jarvi@tuni.fi
- *
- * added retturn_board() to get board out of this class
+ * Gameboard class handles game logic and board.
+ * This class was provided by course staff.
+ *  return_board() added by me to 
  * */
 
 #ifndef GAMEBOARD_HH
@@ -73,6 +69,7 @@ public:
     // Prints the gameboard.
     void print() const;
 
+    // Returns the board.
     std::vector<std::vector<std::string>> return_board();
 
 private:
