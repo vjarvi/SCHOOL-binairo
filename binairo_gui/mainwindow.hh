@@ -6,13 +6,6 @@
  * Click a square to change its value between 0/1/empty. Click 'place' to save and check
  * for wrognly placed numbers. More detailed instructions in 'instructions.txt'.
  *
- *
- * program writer
- * Name: Valtti Järvi
- * Student number: 151326251
- * username: tfvaja
- * E-Mail: valtti.jarvi@tuni.fi
- *
  * */
 
 #ifndef MAINWINDOW_HH
@@ -76,10 +69,12 @@ private slots:
     void on_pushbutton_pause_clicked();
 
 private:
+    // pointer for the ui object
     Ui::MainWindow *ui;
-
+    
     GameBoard gameboard;
 
+    // used for updating the clock
     QTimer* timer;
     int minutes_ = 0;
     int seconds_ = 0;
@@ -94,3 +89,4 @@ private:
     void draw_board();
 };
 #endif // MAINWINDOW_HH
+
