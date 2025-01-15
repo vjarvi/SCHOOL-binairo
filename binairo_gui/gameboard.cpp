@@ -1,10 +1,7 @@
 /*
- * program writer
- * Name: Valtti Järvi
- * Student number: 151326251
- * username: tfvaja
- * E-Mail: valtti.jarvi@tuni.fi
- *
+ * Gameboard class handles game logic and board.
+ * This class was provided by course staff.
+ * 
  * */
 
 #include "gameboard.hh"
