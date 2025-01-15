@@ -1,11 +1,13 @@
 /*
- * program writer
- * Name: Valtti Järvi
- * Student number: 151326251
- * username: tfvaja
- * E-Mail: valtti.jarvi@tuni.fi
- *
+ * This program is user interface for the game binairo. Game logic is implemented
+ * in class GameBoard and UI in mainwindow. 
+ * This class:
+ * -Initializes the main game window and its components
+ * -Functions activate when buttons are pressed in UI.
+ * -Manages game states, such as start, pause, and reset.
+ * -Updates the game board and checks for game completion.
  * */
+
 #include "mainwindow.hh"
 #include "ui_mainwindow.h"
 #include <QDebug>
@@ -15,17 +17,25 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    
+    // set up the default background color for the application.
     this->setStyleSheet("background-color: #D3D3D3;");
+    
+    // hide the "Place" button as it is only shown during gameplay.
     ui->pushbutton_place_number->hide();
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()),
           this, SLOT(update_time()));
+
+    // set styles for UI elements to improve aesthetics.
     ui->lcdnumber_minutes->setStyleSheet("QLCDNumber { color: red; background-color: Tomato; }");
     ui->lcdnumber_seconds->setStyleSheet("QLCDNumber {color: red; background-color: Tomato; }");
     ui->lineedit_seed_or_input->setStyleSheet("background-color: white;");
     ui->pushbutton_place_number->setStyleSheet("background-color: white;");
     ui->pushbutton_reset->setStyleSheet("background-color: white;");
     ui->pushbutton_start->setStyleSheet("background-color: white;");
+
+    // display the game rulse in a text browser, hide initially.
     ui->textbrowser_rules->setText("Objective of the game is to fill the board with"
                                    " zeros and ones. Every row and column must have"
                                    " same number of zeros and ones. Three or more"
@@ -41,16 +51,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
-
-
-
-
-
 void MainWindow::on_pushbutton_start_clicked()
 {
-
+    // check if user has chosen either "random" or "input" for filling the gameboard
     if ( ui->checkbox_random->isChecked() == ui->checkbox_input->isChecked()){
         ui->label_general->setText("Choose random or input!");
         return;
@@ -58,7 +61,7 @@ void MainWindow::on_pushbutton_start_clicked()
     // boolean to check for wrong input
     bool input_check;
 
-    // for random seed
+    // if user chose "random"
     if ( random_input ){
 
         int seed = ui->lineedit_seed_or_input->text().toULong(&input_check);
@@ -72,7 +75,7 @@ void MainWindow::on_pushbutton_start_clicked()
             ui->label_general->setText("Bad seed!");
             return;
         }
-    // for user input
+    // if user chose "input"
     } else{
         std::string input = "'" + ui->lineedit_seed_or_input->text().toStdString() + "'";
 
@@ -81,7 +84,7 @@ void MainWindow::on_pushbutton_start_clicked()
             return;
         }
     }
-    // hide widgets used in start, start timer etc.
+    // hide widgets used in start, set instruction text (general) to "Play!" and start the timer.
     ui->checkbox_random->hide();
     ui->checkbox_input->hide();
     ui->lineedit_seed_or_input->hide();
@@ -95,7 +98,7 @@ void MainWindow::on_pushbutton_start_clicked()
     MainWindow::draw_board();
 }
 
-
+// Handles button clicks on the game board to toggle between "0", "1", and " " values.
 void MainWindow::handle_clicks()
 {
     // find sender button and change its text and color back to black if needed.
@@ -117,7 +120,6 @@ void MainWindow::handle_clicks()
         }
     }
 }
-
 
 void MainWindow::on_pushbutton_place_number_clicked()
 {
@@ -144,7 +146,7 @@ void MainWindow::on_pushbutton_place_number_clicked()
             }
         }
     }
-    // check if game is over, stop timer, change background color hide unnencessary buttons.
+    // check if game is over, stop timer, change background color and hide unnencessary buttons.
     if ( gameboard.is_game_over() ){
         timer->stop();
 
@@ -163,7 +165,7 @@ void MainWindow::on_pushbutton_place_number_clicked()
     }
 }
 
-
+// updates the timer display every second
 void MainWindow::update_time()
 {
     seconds_ += 1;
@@ -175,7 +177,6 @@ void MainWindow::update_time()
     ui->lcdnumber_seconds->display(seconds_);
     ui->lcdnumber_minutes->display(minutes_);
 }
-
 
 void MainWindow::on_pushbutton_reset_clicked()
 {
@@ -213,7 +214,6 @@ void MainWindow::on_pushbutton_reset_clicked()
     ui->lcdnumber_seconds->display(0);
 }
 
-
 void MainWindow::on_checkbox_random_toggled(bool checked)
 {
     // if input is chosen, removes it so only one option is chosen
@@ -223,7 +223,6 @@ void MainWindow::on_checkbox_random_toggled(bool checked)
     random_input = true;
     ui->label_enter_seed->setText("Enter random seed:");
 }
-
 
 void MainWindow::on_checkbox_input_toggled(bool checked)
 {
@@ -235,7 +234,6 @@ void MainWindow::on_checkbox_input_toggled(bool checked)
     ui->label_enter_seed->setText("Enter input:");
 }
 
-
 void MainWindow::on_pushbutton_help_clicked()
 {
     if ( ui->textbrowser_rules->isVisible() ){
@@ -244,7 +242,6 @@ void MainWindow::on_pushbutton_help_clicked()
         ui->textbrowser_rules->show();
     }
 }
-
 
 void MainWindow::on_pushbutton_pause_clicked()
 {
@@ -276,7 +273,6 @@ void MainWindow::on_pushbutton_pause_clicked()
         }
     }
 }
-
 
 void MainWindow::draw_board()
 {
